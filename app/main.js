@@ -1,3 +1,4 @@
+const emitter = mitt();
 const inputComponent = {
     template: `<input class="input is-small" type="text" :placeholder="placeholder" v-model="noteInput" @keyup.enter="monitorEnterKey" />`,
     props: ['placeholder'],
@@ -8,7 +9,7 @@ const inputComponent = {
     },
     methods: {
         monitorEnterKey(e) {
-            this.$emit('add-note', { note: this.noteInput, timestamp: new Date().toLocaleString() });
+            emitter.emit('add-note', { note: this.noteInput, timestamp: new Date().toLocaleString() });
             this.noteInput = '';
         }
     },
@@ -31,6 +32,9 @@ const app = {
             this.notes.push(event.note);
             this.timestamps.push(event.timestamp);
         }
+    },
+    created(){
+        emitter.on('add-note', this.addNote);
     }
 };
 
