@@ -8,7 +8,7 @@ const inputComponent = {
     },
     methods: {
         monitorEnterKey(e) {
-            this.$emit('add-note', { note: this.noteInput, timeStamp: new Date().toLocaleString() });
+            this.$emit('add-note', { note: this.noteInput, timestamp: new Date().toLocaleString() });
             this.noteInput = '';
         }
     },
@@ -22,8 +22,14 @@ const app = {
     data() {
         return {
             notes: [],
-            timeStamps: [],
+            timestamps: [],
             placeholder: 'Enter a note',
+        }
+    },
+    methods: {
+        addNote(event) {
+            this.notes.push(event.note);
+            this.timestamps.push(event.timestamp);
         }
     }
 };
